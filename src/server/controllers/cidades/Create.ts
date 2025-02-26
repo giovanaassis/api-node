@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
 
@@ -12,13 +12,11 @@ const bodyValidation: yup.Schema<ICidade> = yup.object().shape({
     estado: yup.string().required()
 })
 
-export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
-
-    let validatedData: ICidade | undefined = undefined;
+// middleware de validação de dados
+export const createBodyValidator: RequestHandler = async (req, res, next) => {
     try {
-        validatedData = await bodyValidation.validate(req.body, { abortEarly: false });
-        console.log(req.body.nome);
-        res.send('Criado!');
+        await bodyValidation.validate(req.body, { abortEarly: false });
+        return next();
 
     } catch (error) {
         const yupError = error as yup.ValidationError;
@@ -34,6 +32,12 @@ export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
             errors: validationErrors,
         })
     }
+}
 
+
+export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
+    
+    console.log(req.body.nome);
+    res.send('Criado!');
     
 }
