@@ -9,15 +9,12 @@ router.get('/', (req, res) => {
     res.send('Olá, mundo!');
 })
 
-router.get('/cidades', 
-    CidadesControllers.getAllValidation,
-    CidadesControllers.getAll
-)
+// rotas para cidades
+router.get('/cidades', CidadesControllers.getAllValidation,CidadesControllers.getAll)
+router.get('/cidades/:id', CidadesControllers.getByIdlValidation,CidadesControllers.getById)
+router.post('/cidades', CidadesControllers.createValidation, CidadesControllers.create);
+router.put('/cidades/:id', CidadesControllers.updateByIdValidation, CidadesControllers.updateById);
+router.delete('/cidades/:id', CidadesControllers.deleteByIdValidation, CidadesControllers.deleteById);
 
-router.post(
-    '/cidades', 
-    CidadesControllers.createValidation, 
-    CidadesControllers.create
-);
 
 export { router };
