@@ -22,4 +22,22 @@ describe('Cidades - Create', () => {
         expect(res1.body).toHaveProperty('errors.body.nome');
     })
 
+    it('Tenta criar registro com tipo inválido', async () => {
+        const res1 = await testServer
+        .post('/cidades')
+        .send({ nome: 1 });
+
+        expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
+        expect(res1.body).toHaveProperty('errors.body.nome');
+    })
+
+    it('Tenta criar registro vazio', async () => {
+        const res1 = await testServer
+        .post('/cidades')
+        .send({});
+
+        expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
+        expect(res1.body).toHaveProperty('errors.body.nome');
+    })
+
 })
