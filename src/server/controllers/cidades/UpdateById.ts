@@ -2,14 +2,13 @@ import { Request, Response } from "express";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares/validation";
 import { StatusCodes } from "http-status-codes";
+import { ICidade } from "../../database/models";
 
 interface IParamsProps {
     id?: number
 }
 
-interface IBodyProps {
-    nome: string
-}
+interface IBodyProps extends Omit<ICidade, 'id'> {}
 
 // middleware de validação de dados
 export const updateByIdValidation = validation((getSchema) => ({
