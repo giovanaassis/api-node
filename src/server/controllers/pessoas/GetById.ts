@@ -17,21 +17,21 @@ export const getByIdValidation = validation(get => ({
 
 export const getById = async (req: Request<IParamProps>, res: Response) => {
   if (!req.params.id) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
+    res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
         default: 'O parâmetro "id" precisa ser informado.'
       }
     });
   }
 
-  const result = await PessoasProvider.getById(req.params.id);
+  const result = await PessoasProvider.getById(Number(req.params.id));
   if (result instanceof Error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
         default: result.message
       }
     });
   }
 
-  return res.status(StatusCodes.OK).json(result);
+  res.status(StatusCodes.OK).json(result);
 };
