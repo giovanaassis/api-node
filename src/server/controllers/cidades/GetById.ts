@@ -19,17 +19,17 @@ export const getByIdlValidation = validation((getSchema) => ({
 export const getById = async (req: Request<IParamsProps>, res: Response) => {
 
   if(!req.params.id) {
-    return res.status(StatusCodes.BAD_REQUEST).json({
+    res.status(StatusCodes.BAD_REQUEST).json({
       errors: {
         default: 'O parâmetro "id" precisa ser informado.'
       }
     })
   }
 
-  const result = await CidadesProvider.getById(req.params.id);
+  const result = await CidadesProvider.getById(Number(req.params.id));
 
   if (result instanceof Error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
         default: result.message
       }

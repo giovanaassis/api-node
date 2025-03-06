@@ -16,5 +16,7 @@ router.post('/cidades', CidadesControllers.createValidation, CidadesControllers.
 router.put('/cidades/:id', CidadesControllers.updateByIdValidation, CidadesControllers.updateById);
 router.delete('/cidades/:id', CidadesControllers.deleteByIdValidation, CidadesControllers.deleteById);
 
+// rotas para pessoas
+
 
 export { router };
